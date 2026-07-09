@@ -16,7 +16,7 @@ setup(
         "analyzer/*.py",
         "attacks/*.py",
     ]},
-    install_requires=["capstone>=5.0"],
+    install_requires=["capstone>=5.0", "numpy>=1.24"],
     python_requires=">=3.8",
     classifiers=[
         "Development Status :: 4 - Beta",
