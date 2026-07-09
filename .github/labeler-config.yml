@@ -1,27 +1,21 @@
-# Configuración del Labeler automático
-
-"core":
+# Labeler v5 config
+core:
   - core/**/*
-
-"loader":
+loader:
   - loaders/**/*
-
-"module":
+module:
   - modules/**/*
-
-"analyzer":
+analyzer:
   - analyzer/**/*
-
-"pipeline":
+pipeline:
   - pipeline.py
-
-"test":
+test:
   - tests/**/*
-
-"ci":
+ci:
   - .github/**/*
-
-"documentation":
+  - setup.py
+  - pyproject.toml
+documentation:
   - docs/**/*
   - README.md
   - CONTRIBUTING.md
