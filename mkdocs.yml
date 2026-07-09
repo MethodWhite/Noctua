@@ -1,0 +1,34 @@
+site_name: Noctua
+site_description: Reverse Engineering Framework en Python
+site_url: https://methodwhite.github.io/Noctua/
+repo_url: https://github.com/MethodWhite/Noctua
+edit_uri: blob/main/docs/
+
+theme:
+  name: material
+  palette:
+    primary: teal
+    accent: green
+  features:
+    - navigation.tabs
+    - navigation.sections
+
+nav:
+  - Inicio: index.md
+  - Instalación: instalacion.md
+  - Uso: uso.md
+  - Arquitectura: arquitectura.md
+  - Módulos: modulos.md
+  - Contribuir: CONTRIBUTING.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/MethodWhite

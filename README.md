@@ -1,69 +1,79 @@
-# Noctua 🔍
+<div align="center">
+  <h1>🐍 Noctua</h1>
+  <p><strong>Tool-CyberSec-Forensic-Noctua</strong></p>
+  <p>Framework de <strong>Reverse Engineering</strong> y análisis forense en Python</p>
+  <p>
+    <a href="#-características"><img src="https://img.shields.io/badge/7-Formatos_Loader-blue?style=flat-square" alt="Loaders"></a>
+    <a href="#-módulos-de-análisis"><img src="https://img.shields.io/badge/15-Módulos-green?style=flat-square" alt="Modules"></a>
+    <a href="#-arquitectura"><img src="https://img.shields.io/badge/Clean-Architecture-red?style=flat-square" alt="Architecture"></a>
+    <a href="#"><img src="https://img.shields.io/badge/Python-3.8+-yellow?style=flat-square" alt="Python"></a>
+  </p>
+  <p>
+    <a href="#-instalación">Instalar</a> •
+    <a href="#-uso">Usar</a> •
+    <a href="#-arquitectura">Arquitectura</a> •
+    <a href="#-agregar-un-módulo">Extender</a>
+  </p>
+  <br>
+</div>
 
-**Tool-CyberSec-Forensic-Noctua** — Framework de **reverse engineering** y **análisis forense de binarios** en Python.
+---
 
-Noctua detecta y analiza formatos binarios (ELF, PE, Mach-O, DEX, WASM, WebP) aplicando módulos de análisis como criptografía, entropía, flujo de datos, temporización, espectro, huellas digitales y más.
+**Noctua** es un framework de reverse engineering en **Python** que detecta, analiza y extrae información de binarios. Arquitectura modular con 15 módulos de análisis y clean architecture.
 
 ---
 
 ## ✨ Características
 
-### Cargadores (Loaders)
-| Formato | Soporte |
-|---------|---------|
-| **ELF** | Executable and Linkable Format (Linux) |
-| **PE** | Portable Executable (Windows) |
-| **Mach-O** | Mach Object (macOS/iOS) |
-| **DEX** | Dalvik Executable (Android) |
-| **WASM** | WebAssembly |
-| **WebP** | WebP image format (análisis EXIF) |
-| **Generic** | Fallback para binarios desconocidos |
+### Loaders — 7 Formatos
 
-### Módulos de Análisis
+| Formato | Uso | Estado |
+|---------|-----|--------|
+| **ELF** | Linux, IoT | ✅ |
+| **PE** | Windows | ✅ |
+| **Mach-O** | macOS/iOS | ✅ |
+| **DEX** | Android | ✅ |
+| **WASM** | WebAssembly | ✅ |
+| **WebP** | Forense de imágenes | ✅ + EXIF |
+| **Generic** | Fallback | ✅ |
+
+### Módulos — 15 Análisis
+
 | Módulo | Descripción |
 |--------|-------------|
-| `BranchTiming` | Análisis de temporización de branches (side-channel) |
-| `Dataflow` | Detección de strings sensibles (passwords, tokens, keys) |
+| `BranchTiming` | Side-channel por temporización |
+| `Dataflow` | Detección de secrets (passwords, tokens, keys) |
 | `Spectral` | Análisis espectral del binario |
-| `MaxEnt` | Máxima entropía para detección de ofuscación |
+| `MaxEnt` | Máxima entropía para ofuscación |
 | `CrossDomain` | Correlación cross-domain |
 | `MI2D` | Información mutua 2D |
-| `Entropy` | Cálculo de entropía por secciones |
-| `Profiler` | Perfilado del binario |
-| `Crypto` | Escaneo de constantes criptográficas (AES S-box, base64) |
-| `ImportExport` | Análisis de importaciones y exportaciones |
+| `Entropy` | Entropía por secciones |
+| `Profiler` | Perfilado de secciones |
+| `Crypto` | Constantes AES, base64, etc. |
+| `ImportExport` | Import/export tables |
 | `Fingerprint` | Huella digital del binario |
 | `Embedded` | Detección de archivos embebidos |
-| `StringXformer` | Detección de strings codificados (base64) |
+| `StringXformer` | Strings codificados |
 | `ByteFrequency` | Frecuencia de bytes |
-| `CallGraph` | Análisis del grafo de llamadas |
+| `CallGraph` | Grafo de llamadas |
 
-### Arquitectura (Clean Architecture + Patrones)
+---
+
+## 🏗️ Arquitectura
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                   Interface Layer                    │
-│           analyzer.py, pipeline.py, CLI              │
-├─────────────────────────────────────────────────────┤
-│                   Application Layer                  │
-│     Pipeline (Pipeline pattern), Analyzer modules    │
-├─────────────────────────────────────────────────────┤
-│                    Domain Layer                      │
-│   Config (Config Object), Result (Result/Monad),     │
-│   MWREEngine, BinaryLoader (Strategy), Module base   │
-├─────────────────────────────────────────────────────┤
-│                 Infrastructure Layer                 │
-│   Loaders (ELF, PE, Mach-O, DEX, WASM, WebP),       │
-│   Core engine, Signal tools                          │
-└─────────────────────────────────────────────────────┘
+┌──────────────────────────────────────┐
+│  Interface    CLI · analyzer.py      │
+├──────────────────────────────────────┤
+│  Application  Pipeline · Módulos     │
+├──────────────────────────────────────┤
+│  Domain       Config · Result        │
+├──────────────────────────────────────┤
+│  Infra        Loaders · Core Engine  │
+└──────────────────────────────────────┘
 ```
 
-**Patrones implementados:**
-- **Strategy**: `BinaryLoader` define interfaz `check()` / `load()`
-- **Pipeline**: `Pipeline` orquesta stages (detect → load → analyze → modules → report)
-- **Config Object**: `NoctuaConfig` centraliza configuración
-- **Result/Monad**: `NoctuaResult[T]` para manejo consistente de errores
-- **Helper**: Funciones compartidas entre loaders
+**Patrones:** Strategy · Pipeline · Config Object · Result/Monad
 
 ---
 
@@ -72,147 +82,68 @@ Noctua detecta y analiza formatos binarios (ELF, PE, Mach-O, DEX, WASM, WebP) ap
 ```bash
 git clone https://github.com/MethodWhite/Noctua.git
 cd Noctua
-pip install -r requirements.txt  # si existe
+pip install capstone
 ```
 
-### Dependencias
-- Python 3.8+
-- `capstone` (para desensamblado)
+Requiere Python 3.8+.
 
 ---
 
 ## 🚀 Uso
 
-### Análisis básico
 ```python
 from engine import MWREEngine
 
-eng = MWREEngine("binario.elf")
+eng = MWREEngine("malware.exe")
 summary = eng.run()
 print(summary)
 ```
 
-### Con Pipeline
-```python
-from config import NoctuaConfig
-from pipeline import Pipeline, stage_load, stage_analyze, stage_report
-
-cfg = NoctuaConfig(verbose=True)
-pipe = Pipeline(cfg)
-
-pipe.register("Load binary", stage_load)
-pipe.register("Analyze", stage_analyze)
-pipe.register("Report", stage_report)
-
-result = pipe.run("binario.elf")
-print(result)
-```
-
-### Usando el Analyzer
 ```python
 from core.engine import MWREEngine
 from analyzer.universal import NOCTUAAnalyzer
 
-eng = MWREEngine("binario.elf")
+eng = MWREEngine("binario")
 eng.run()
-
 analyzer = NOCTUAAnalyzer(eng)
 results = analyzer.run()
+```
 
-for module, data in results.items():
-    print(f"{module}: {data}")
+### Con Pipeline
+```python
+from pipeline import Pipeline, stage_load, stage_analyze
+
+pipe = Pipeline()
+pipe.register("Load", stage_load)
+pipe.register("Analyze", stage_analyze)
+pipe.run("binario.elf")
 ```
 
 ---
 
-## 🧩 Agregar un Nuevo Módulo
-
-1. Crear archivo en `modules/` que herede de `AnalyzerModule`
-2. Definir `name`, `description`, `applies_to`
-3. Implementar `analyze()` que retorna un dict
-4. Agregar a `MODULES` en `analyzer/universal.py`
+## 🧩 Extender
 
 ```python
 from modules.base import AnalyzerModule
 
 class MiModulo(AnalyzerModule):
     name = "mi_modulo"
-    description = "Mi análisis personalizado"
+    description = "Análisis personalizado"
     applies_to = ['elf', 'pe']
 
     def analyze(self):
         data = getattr(self.engine, 'data', b'')
-        # ... análisis ...
         return {'resultado': 42}
 ```
 
----
-
-## 🧪 Testing
-
-```bash
-python -c "
-from core.engine import MWREEngine
-eng = MWREEngine('/bin/ls')
-print(eng.binary_type)
-print(f'Sectores: {len(eng.sections)}')
-print(f'Strings: {len(eng.strings)}')
-"
-```
+[Más en CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
-## 📁 Estructura del Proyecto
-
-```
-noctua/
-├── engine.py              # Motor de análisis principal
-├── analyzer.py            # Analyzer básico
-├── config.py              # Config Object (NoctuaConfig)
-├── result.py              # Result/Monad (NoctuaResult)
-├── pipeline.py            # Pipeline pattern
-├── core/
-│   ├── engine.py          # MWREEngine
-│   ├── instruction.py     # MWInstruction, MWFunction
-│   └── signal.py          # Signal processing
-├── loaders/
-│   ├── base.py            # BinaryLoader (Strategy)
-│   ├── elf.py, pe.py, macho.py, dex.py,
-│   ├── wasm.py, webp.py, generic.py
-├── modules/
-│   ├── base.py            # AnalyzerModule base
-│   ├── branch_timing.py, dataflow.py, spectral.py,
-│   │   maxent.py, cross_domain.py, mi_2d.py,
-│   │   entropy.py, profiler.py, crypto.py,
-│   │   imports.py, fingerprint.py, embedded.py,
-│   │   strings.py, bytefreq.py, callgraph.py
-├── analyzer/
-│   └── universal.py       # NOCTUAAnalyzer (orquesta módulos)
-├── attacks/
-│   └── simulator.py       # Simulador de ataques (WebP/EXIF)
-├── dex_builder.py         # Constructor de DEX
-├── dex_parser.py          # Parser de DEX
-└── README.md
-```
-
----
-
-## 🔗 Enlaces
-
-- **Noctua-C** (versión C de alto rendimiento): https://github.com/MethodWhite/Noctua-C
-- **Reportar bugs**: https://github.com/MethodWhite/Noctua/issues
-
----
-
-## 📖 Documentación Auto-generada
-
-### Sphinx (docs de API en Python)
-```bash
-pip install sphinx sphinx-rtd-theme
-sphinx-apidoc -o docs/ . && sphinx-build -b html docs/ docs/_build
-# Abrir docs/_build/index.html
-```
-
-## ⚖️ Licencia
-
-Uso educativo y forense. Responsabilidad del usuario.
+<div align="center">
+  <p>Hecho con ❤️ por <a href="https://github.com/MethodWhite">MethodWhite</a></p>
+  <p>
+    <a href="https://github.com/MethodWhite/Noctua-C">⚡ Noctua-C (C)</a> •
+    <a href="https://github.com/MethodWhite/Noctua/issues">🐛 Reportar bug</a>
+  </p>
+</div>
