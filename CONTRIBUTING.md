@@ -1,35 +1,63 @@
-# Contributing to Noctua / Noctua-C
+# Contributing to Noctua
 
-## 🧠 Filosofía
+## 🌳 Estrategia de Ramas
 
-Este proyecto sigue **Clean Architecture** y **SOLID principles**.
-Cada contribución debe mantener o mejorar la separación de capas y la testabilidad.
+```
+main          ───●────●────●
+                   \    /
+feat/*            ●──●──●
+                      \
+fix/*               ●────●
+```
 
-## 🧩 Cómo Agregar un Módulo
+| Rama | Uso |
+|------|-----|
+| `main` | Estable |
+| `feat/*` | Nuevas features |
+| `fix/*` | Bugs |
+| `refactor/*` | Refactorización |
+| `docs/*` | Documentación |
 
-1. Crear `modules/mi_modulo.py` heredando de `AnalyzerModule`
-2. Definir `name`, `description`, `applies_to`
-3. Implementar `analyze()` que retorna dict
-4. Agregar a `MODULES` en `analyzer/universal.py`
+## 🔄 Flujo
 
-## ✅ Convenciones de Código
-
-- PEP 8
-- Type hints obligatorios en funciones públicas
-- Nombres: `snake_case` para funciones, `PascalCase` para clases
-- Errores: usar `NoctuaResult[T]`
+```bash
+git checkout main && git pull
+git checkout -b feat/mi-feature
+# ... código ...
+git add -A && git commit -m "feat: descripción"
+git push -u origin feat/mi-feature
+# PR → CI → merge
+```
 
 ## 📝 Commits
 
-Usar commits atómicos con prefijos:
-- `feat:` — nueva funcionalidad
-- `refactor:` — cambio de código sin cambio funcional
-- `fix:` — corrección de bug
-- `docs:` — documentación
-- `test:` — tests
+```
+feat:     nueva funcionalidad
+fix:      corrección de bug
+refactor: cambio sin nueva funcionalidad
+docs:     documentación
+test:     tests
+ci:       CI/CD
+```
 
-## 🔄 Pull Request
+## ✅ CI Pipeline
 
-1. Crear branch desde `main`: `feat/mi-feature`
-2. Commits atómicos
-3. PR description clara
+```
+Push/PR → [ruff lint] → [test 3.8] → [test 3.9] → [test 3.10] → [test 3.11]
+```
+
+## 🧩 Agregar un Módulo
+
+1. `modules/mi_modulo.py` heredando de `AnalyzerModule`
+2. `name`, `description`, `applies_to`, `analyze()`
+3. Agregar a `MODULES` en `analyzer/universal.py`
+
+## 🧩 Agregar un Loader
+
+1. `loaders/mi_formato.py` heredando de `BinaryLoader`
+2. `check()` y `load()` classmethods
+3. El engine lo detecta automáticamente vía `MAGIC_MAP`
+
+## 🔍 Reportar Bugs
+
+Usar [bug template](.github/ISSUE_TEMPLATE/bug_report.md).
