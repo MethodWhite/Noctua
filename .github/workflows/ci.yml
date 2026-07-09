@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install capstone
+
+      - name: Lint with ruff
+        run: |
+          pip install ruff
+          ruff check --ignore=E402,F403,F405 .
+
+      - name: Test import
+        run: |
+          python -c "
+          from core.engine import MWREEngine
+          print('[OK] MWREEngine imported')
+          "
+
+      - name: Test analysis
+        run: |
+          python -c "
+          from core.engine import MWREEngine
+          eng = MWREEngine('/bin/ls')
+          print(f'Type: {eng.binary_type}')
+          print(f'Sections: {len(eng.sections)}')
+          print(f'Strings: {len(eng.strings)}')
+          print('[OK] Analysis works')
+          "

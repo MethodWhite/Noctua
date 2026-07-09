@@ -6,6 +6,7 @@
     <a href="#-características"><img src="https://img.shields.io/badge/7-Formatos_Loader-blue?style=flat-square" alt="Loaders"></a>
     <a href="#-módulos-de-análisis"><img src="https://img.shields.io/badge/15-Módulos-green?style=flat-square" alt="Modules"></a>
     <a href="#-arquitectura"><img src="https://img.shields.io/badge/Clean-Architecture-red?style=flat-square" alt="Architecture"></a>
+    <a href="https://github.com/MethodWhite/Noctua/actions"><img src="https://img.shields.io/github/actions/workflow/status/MethodWhite/Noctua/ci.yml?branch=main&style=flat-square&logo=github" alt="CI"></a>
     <a href="#"><img src="https://img.shields.io/badge/Python-3.8+-yellow?style=flat-square" alt="Python"></a>
   </p>
   <p>
