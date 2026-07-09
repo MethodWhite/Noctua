@@ -3,6 +3,12 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+*.egg
+*.whl
 *~
 *.swp
 .DS_Store
+.tox/
+.coverage
+htmlcov/
+
