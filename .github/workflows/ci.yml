@@ -31,17 +31,20 @@ jobs:
           pip install ruff
           ruff check --ignore=E402,F403,F405 .
 
+      - name: Install package
+        run: pip install -e .
+
       - name: Test import
         run: |
           python -c "
-          from core.engine import MWREEngine
+          from noctua.core.engine import MWREEngine
           print('[OK] MWREEngine imported')
           "
 
       - name: Test analysis
         run: |
           python -c "
-          from core.engine import MWREEngine
+          from noctua.core.engine import MWREEngine
           eng = MWREEngine('/bin/ls')
           print(f'Type: {eng.binary_type}')
           print(f'Sections: {len(eng.sections)}')
