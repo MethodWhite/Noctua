@@ -1,0 +1,32 @@
+# Labeler v5 config — each label maps to an array of glob patterns
+
+core:
+  - core/**/*
+
+loader:
+  - loaders/**/*
+
+module:
+  - modules/**/*
+
+analyzer:
+  - analyzer/**/*
+
+pipeline:
+  - pipeline.py
+
+test:
+  - tests/**/*
+
+ci:
+  - .github/**/*
+  - setup.py
+  - pyproject.toml
+
+documentation:
+  - docs/**/*
+  - README.md
+  - CONTRIBUTING.md
+  - CHANGELOG.md
+  - SECURITY.md
+  - CODE_OF_CONDUCT.md
