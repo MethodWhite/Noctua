@@ -1,0 +1,26 @@
+# Stale — Cierra issues/PRs inactivos automáticamente
+
+name: Stale
+
+on:
+  schedule:
+    - cron: "0 12 * * 1"
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-issue-message: "⏰ Esta issue lleva 60 días sin actividad."
+          close-issue-message: "❌ Cerrada por inactividad."
+          stale-issue-label: "stale"
+          days-before-issue-stale: 60
+          days-before-issue-close: 7
+          stale-pr-message: "⏰ Este PR lleva 30 días sin actividad."
+          close-pr-message: "❌ PR cerrado por inactividad."
+          stale-pr-label: "stale"
+          days-before-pr-stale: 30
+          days-before-pr-close: 7
+          exempt-issue-labels: "bug,enhancement"
