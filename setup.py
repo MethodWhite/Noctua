@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name="noctua",
@@ -7,17 +7,22 @@ setup(
     author="MethodWhite",
     author_email="methodwhite@proton.me",
     url="https://github.com/MethodWhite/Noctua",
-    packages=find_packages(),
-    install_requires=[
-        "capstone>=5.0",
-    ],
+    packages=["noctua"],
+    package_dir={"noctua": "."},
+    package_data={"noctua": [
+        "core/*.py",
+        "loaders/*.py",
+        "modules/*.py",
+        "analyzer/*.py",
+        "attacks/*.py",
+    ]},
+    install_requires=["capstone>=5.0"],
     python_requires=">=3.8",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: Information Technology",
-        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
@@ -25,7 +30,6 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Topic :: Security",
-        "Topic :: Software Development :: Assemblers",
         "Topic :: Software Development :: Disassemblers",
     ],
 )
