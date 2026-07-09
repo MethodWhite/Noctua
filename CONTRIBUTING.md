@@ -58,6 +58,20 @@ Push/PR → [ruff lint] → [test 3.8] → [test 3.9] → [test 3.10] → [test 
 2. `check()` y `load()` classmethods
 3. El engine lo detecta automáticamente vía `MAGIC_MAP`
 
+## 📋 Metodología: Scrumban
+
+Usamos **GitHub Projects** como Jira interno (gratis).
+
+**Tablero:** https://github.com/users/MethodWhite/projects/2
+
+| Columna | Propósito |
+|---------|-----------|
+| Backlog | Ideas sin priorizar |
+| Sprint | Tareas del sprint actual |
+| In Progress | En desarrollo (max 2) |
+| Review | En PR |
+| Done | Mergeado |
+
 ## 🔍 Reportar Bugs
 
 Usar [bug template](.github/ISSUE_TEMPLATE/bug_report.md).
