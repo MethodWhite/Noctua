@@ -204,6 +204,15 @@ noctua/
 
 ---
 
+## 📖 Documentación Auto-generada
+
+### Sphinx (docs de API en Python)
+```bash
+pip install sphinx sphinx-rtd-theme
+sphinx-apidoc -o docs/ . && sphinx-build -b html docs/ docs/_build
+# Abrir docs/_build/index.html
+```
+
 ## ⚖️ Licencia
 
 Uso educativo y forense. Responsabilidad del usuario.
