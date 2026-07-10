@@ -1,3 +1,6 @@
+# Labeler — Etiqueta PRs automáticamente según archivos modificados
+# Docs: https://github.com/actions/labeler
+
 name: Labeler
 
 on:
