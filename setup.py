@@ -22,7 +22,7 @@ setup(
         "scipy>=1.10",
         "pycryptodome>=3.18",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
