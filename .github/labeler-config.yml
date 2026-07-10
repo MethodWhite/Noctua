@@ -1,30 +1,40 @@
-# Configuración del Labeler automático
+core:
+  - changed-files:
+      - any-glob-to-any-file: core/**/*
 
-"core":
-  - core/**/*
+loader:
+  - changed-files:
+      - any-glob-to-any-file: loaders/**/*
 
-"loader":
-  - loaders/**/*
+module:
+  - changed-files:
+      - any-glob-to-any-file: modules/**/*
 
-"module":
-  - modules/**/*
+analyzer:
+  - changed-files:
+      - any-glob-to-any-file: analyzer/**/*
 
-"analyzer":
-  - analyzer/**/*
+pipeline:
+  - changed-files:
+      - any-glob-to-any-file: pipeline.py
 
-"pipeline":
-  - pipeline.py
+test:
+  - changed-files:
+      - any-glob-to-any-file: tests/**/*
 
-"test":
-  - tests/**/*
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**/*
+          - setup.py
+          - pyproject.toml
 
-"ci":
-  - .github/**/*
-
-"documentation":
-  - docs/**/*
-  - README.md
-  - CONTRIBUTING.md
-  - CHANGELOG.md
-  - SECURITY.md
-  - CODE_OF_CONDUCT.md
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - docs/**/*
+          - README.md
+          - CONTRIBUTING.md
+          - CHANGELOG.md
+          - SECURITY.md
+          - CODE_OF_CONDUCT.md
