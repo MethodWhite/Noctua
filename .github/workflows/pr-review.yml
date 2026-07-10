@@ -1,5 +1,4 @@
-# PR Review — Aprueba y auto-mergea PRs de solo configuración
-# Seguridad: solo PRs que toquen exclusivamente .github/ se auto-fusionan
+# PR Review — Auto-mergea PRs de solo configuración y dependencias
 
 name: PR Review
 
@@ -37,13 +36,6 @@ jobs:
           done <<< "$CHANGED"
           echo "only_config=$ONLY_CONFIG" >> "$GITHUB_OUTPUT"
 
-      - name: Approve PR
-        if: steps.check.outputs.only_config == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr review "${{ github.event.pull_request.number }}" --approve --body "Auto-aprobado: solo cambios de configuración en .github/"
-
       - name: Enable auto-merge
         if: steps.check.outputs.only_config == 'true'
         env:
@@ -73,23 +65,13 @@ jobs:
             case "$file" in
               .github/workflows/*.yml) ;;
               .github/dependabot.yml) ;;
-              setup.py) ;;
-              pyproject.toml) ;;
               requirements/*.txt) ;;
-              requirements/*.pip) ;;
-              */setup.py) ;;
               */pyproject.toml) ;;
+              */Cargo.toml) ;;
               *) SAFE=false; break ;;
             esac
           done <<< "$CHANGED"
           echo "safe=$SAFE" >> "$GITHUB_OUTPUT"
-
-      - name: Approve dependabot PR
-        if: steps.verify.outputs.safe == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr review "${{ github.event.pull_request.number }}" --approve --body "Auto-aprobado: actualización de dependencias"
 
       - name: Enable auto-merge for dependabot
         if: steps.verify.outputs.safe == 'true'
