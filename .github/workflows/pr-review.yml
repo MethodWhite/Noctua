@@ -35,7 +35,7 @@ jobs:
               *) ONLY_CONFIG=false; break ;;
             esac
           done <<< "$CHANGED"
-          echo "only_config=$ONLY_CONFIG" >> $GITHUB_OUTPUT
+          echo "only_config=$ONLY_CONFIG" >> "$GITHUB_OUTPUT"
 
       - name: Approve PR
         if: steps.check.outputs.only_config == 'true'
@@ -48,8 +48,9 @@ jobs:
         if: steps.check.outputs.only_config == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          gh pr merge "${{ github.event.pull_request.number }}" --auto --squash --subject "${{ github.event.pull_request.title }}"
+          gh pr merge "${{ github.event.pull_request.number }}" --auto --squash --subject "$PR_TITLE"
 
   auto-merge-deps:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
@@ -81,7 +82,7 @@ jobs:
               *) SAFE=false; break ;;
             esac
           done <<< "$CHANGED"
-          echo "safe=$SAFE" >> $GITHUB_OUTPUT
+          echo "safe=$SAFE" >> "$GITHUB_OUTPUT"
 
       - name: Approve dependabot PR
         if: steps.verify.outputs.safe == 'true'
@@ -94,5 +95,6 @@ jobs:
         if: steps.verify.outputs.safe == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          gh pr merge "${{ github.event.pull_request.number }}" --auto --squash --subject "${{ github.event.pull_request.title }}"
+          gh pr merge "${{ github.event.pull_request.number }}" --auto --squash --subject "$PR_TITLE"
